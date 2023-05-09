@@ -1,0 +1,12 @@
+# Deploy zeek running against a live interface
+# docker-compose -f zeek-live.yml --force-recreate up
+
+version: '3.7'
+services:
+  zeek_live:
+    environment:
+    volumes:
+     - ./data/zeek/logs/:/usr/local/zeek/logs:rw
+    image: "zeek:v5.0.7"
+    command: zeek -C -i pcapovertcp::127.0.0.1:57102  /usr/local/zeek/share/zeek/site/local-live.zeek
+    network_mode: "host"
