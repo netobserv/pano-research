@@ -14,3 +14,13 @@ services:
       - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
+
+  zeek:
+    image: "zeek:v5.0.7"
+    networks:
+      - pano-network
+    volumes:
+     - ./data/zeek/logs/:/usr/local/zeek/logs:rw
+    command: zeek -C -i pcapovertcp::127.0.0.1:57102  /usr/local/zeek/share/zeek/site/local-live.zeek
+    network_mode: "host"
+    environment:
