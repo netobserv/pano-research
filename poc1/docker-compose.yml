@@ -1,0 +1,16 @@
+version: '3'
+
+networks:
+  pano-network:
+    driver: bridge
+
+services:
+  kafka:
+    image: 'bitnami/kafka:latest'
+    networks:
+      - pano-network
+    ports:
+      - 9092:9092
+      - 9093:9093
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
