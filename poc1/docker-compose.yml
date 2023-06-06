@@ -4,6 +4,7 @@ networks:
   pano-network:
     driver: bridge
 
+
 services:
   kafka:
     image: 'bitnami/kafka:latest'
@@ -14,3 +15,34 @@ services:
       - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
+  grafana:
+    image: 'grafana/grafana:latest'
+    container_name: grafana
+    networks:
+      - pano-network
+    ports:
+      - 9094:9094
+    volumes:
+      - grafana-data:/var/lib/grafana
+    restart: always
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin #TODO
+      - GF_SECURITY_ADMIN_PASSWORD=password #TODO
+  prometheus:
+    image: prom/prometheus:v2.30.3 # TODO which version
+    container_name: prometheus
+    ports:
+      - 9095:9095
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    restart: always 
+  pano-netobserv-agent:
+    image:  netobserv-ebpf-agent/bin/netobserv-ebpf-agent
+    container_name: netobserv-ebpf-agent
+    ports: 9090:9090
+    volumes:
+      - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
+    restart: always
+
