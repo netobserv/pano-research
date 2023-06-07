@@ -41,7 +41,8 @@ services:
   pano-netobserv-agent:
     image:  netobserv-ebpf-agent/bin/netobserv-ebpf-agent
     container_name: netobserv-ebpf-agent
-    ports: 9090:9090
+    ports: 
+      - 9090:9090
     volumes:
       - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
     restart: always
