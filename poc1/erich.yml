@@ -1,0 +1,45 @@
+version: '3'
+
+networks:
+  pano-network:
+    driver: bridge
+
+services:
+  pano-netobserv-agent:
+    image:  quay.io/enahum/netobserv-ebpf-agent:main
+    container_name: netobserv-ebpf-agent
+    networks:
+      - pano-network
+    ports:
+      - 57102:57102
+    volumes:
+      - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
+    restart: always
+
+  zeek:
+    image: "zeek:v5.0.7"
+    container_name: zeek
+    networks:
+      - pano-network
+    volumes:
+     - ./zeek/logs/:/usr/local/zeek/logs:rw
+    command: /usr/local/zeek/bin/zeek -C -i pcapovertcp::netobserv-ebpf-agent:57102  /usr/local/zeek/share/zeek/site/local.zeek
+
+  kafka:
+    image: 'bitnami/kafka:latest'
+    container_name: kafka
+    networks:
+      - pano-network
+    ports:
+      - 9092:9092
+      - 9093:9093
+    environment:
+      - ALLOW_PLAINTEXT_LISTENER=yes
+        
+  flowlogs-pipeline:
+    image: quay.io/netobserv/flowlogs-pipeline:latest
+    container_name: flowlogs-pipeline
+    networks:
+      - pano-network
+    command:
+      - --config=/app/pano-dns.yaml
