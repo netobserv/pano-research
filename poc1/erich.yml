@@ -12,8 +12,6 @@ services:
       - pano-network
     ports:
       - 57102:57102
-    volumes:
-      - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
     restart: always
     environment:
       - FLOWS_TARGET_PORT=9999

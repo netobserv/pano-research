@@ -49,7 +49,7 @@ services:
     networks:
       - pano-network
     ports: 
-      - 9090:9090
+      - 57102:57102
     volumes:
       - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
     restart: always
