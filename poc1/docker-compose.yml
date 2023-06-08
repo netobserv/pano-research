@@ -4,10 +4,10 @@ networks:
   pano-network:
     driver: bridge
 
-
 services:
   kafka:
     image: 'bitnami/kafka:latest'
+    container_name: kafka
     networks:
       - pano-network
     ports:
@@ -15,6 +15,7 @@ services:
       - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
+        
   grafana:
     image: 'grafana/grafana:latest'
     container_name: grafana
@@ -28,9 +29,12 @@ services:
     environment:
       - GF_SECURITY_ADMIN_USER=admin #TODO
       - GF_SECURITY_ADMIN_PASSWORD=password #TODO
+
   prometheus:
     image: prom/prometheus:v2.30.3 # TODO which version
     container_name: prometheus
+    networks:
+      - pano-network
     ports:
       - 9095:9095
     volumes:
@@ -38,20 +42,24 @@ services:
     command:
       - --config.file=/etc/prometheus/prometheus.yml
     restart: always 
+
   pano-netobserv-agent:
     image:  netobserv-ebpf-agent/bin/netobserv-ebpf-agent
     container_name: netobserv-ebpf-agent
+    networks:
+      - pano-network
     ports: 
       - 9090:9090
     volumes:
       - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
     restart: always
+
   zeek:
     image: "zeek:v5.0.7"
+    container_name: zeek
     networks:
       - pano-network
     volumes:
-     - ./data/zeek/logs/:/usr/local/zeek/logs:rw
-    command: zeek -C -i pcapovertcp::127.0.0.1:57102  /usr/local/zeek/share/zeek/site/local-live.zeek
-    network_mode: "host"
-    environment:
+     - ./zeek/logs/:/usr/local/zeek/logs:rw
+    command: /usr/local/zeek/bin/zeek -C -i pcapovertcp::127.0.0.1:57102  /usr/local/zeek/share/zeek/site/local.zeek
+

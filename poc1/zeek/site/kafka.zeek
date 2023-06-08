@@ -1,5 +1,4 @@
-#@load packages/zeek-kafka
-@load Apache/Kafka
+@load packages/zeek-kafka
 
 redef Kafka::topic_name = "";
 redef Kafka::kafka_conf = table(
@@ -15,7 +14,7 @@ event zeek_init()
         # ["conn" ]            = Conn::LOG,
         # ["dce-rpc" ]         = DCE_RPC::LOG,
         # ["dhcp" ]            = DHCP::LOG,
-        ["dns" ]             = DNS::LOG,
+        ["dns" ]             = DNS::LOG
         # ["ftp" ]             = FTP::LOG,
         # ["http"]             = HTTP::LOG,
         # ["irc"]              = IRC::LOG,

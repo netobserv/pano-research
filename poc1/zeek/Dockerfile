@@ -42,3 +42,5 @@ RUN zkg install --force zeek-pcapovertcp-plugin
 WORKDIR /usr/local/zeek/logs
 
 COPY ./site/* /usr/local/zeek/share/zeek/site/
+
+RUN chmod +x /usr/local/zeek/bin/zeek 
