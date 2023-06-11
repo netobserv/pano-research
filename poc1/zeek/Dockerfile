@@ -20,7 +20,8 @@ RUN apt-get install -y wget \
      python3-pip \
      swig \
      zlib1g-dev \
-     libsasl2-dev
+     libsasl2-dev \
+     iputils-ping
 
 ENV PATH="/usr/local/zeek/bin:${PATH}"
 
