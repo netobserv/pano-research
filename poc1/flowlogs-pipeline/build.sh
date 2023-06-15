@@ -1,2 +1,2 @@
 #!/bin/bash
-docker pull quay.io/netobserv/flowlogs-pipeline:latest
+docker build ./ -f ./Dockerfile -t flowlogs-pipeline-pano:latest

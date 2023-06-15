@@ -14,7 +14,7 @@ parameters:
     ingest:
       type: kafka
       kafka:
-        brokers: ["localhost:9092"]
+        brokers: ["kafka:9092"]
         topic: dns
         decoder:
           type: json

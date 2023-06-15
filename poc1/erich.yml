@@ -21,6 +21,8 @@ services:
   zeek:
     image: "zeek:v5.0.7"
     container_name: zeek
+    depends_on: 
+      - kafka
     networks:
       - pano-network
     volumes:
@@ -39,9 +41,13 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
         
   flowlogs-pipeline:
-    image: quay.io/netobserv/flowlogs-pipeline:latest
+    image: flowlogs-pipeline-pano:latest
     container_name: flowlogs-pipeline
+    depends_on: 
+      - kafka
+    ports:
+      - 9102:9102
     networks:
       - pano-network
     command:
-      - --config=/app/pano-dns.yaml
+      - --config=/app/pano-kafka-dns.yaml
