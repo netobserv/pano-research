@@ -41,7 +41,7 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
         
   flowlogs-pipeline:
-    image: flowlogs-pipeline-pano:latest
+    image: 'pano-flowlogs-pipeline:latest'
     container_name: flowlogs-pipeline
     depends_on: 
       - kafka
@@ -50,4 +50,4 @@ services:
     networks:
       - pano-network
     command:
-      - --config=/app/pano-kafka-dns.yaml
+      - --config=/app/docker-pano-kafka-dns.yaml

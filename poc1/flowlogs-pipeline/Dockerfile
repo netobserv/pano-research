@@ -1,3 +1,3 @@
 FROM quay.io/netobserv/flowlogs-pipeline:latest
 
-COPY pano-kafka-dns.yaml /app/
+COPY docker-pano-kafka-dns.yaml /app/
