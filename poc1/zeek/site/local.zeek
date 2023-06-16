@@ -40,10 +40,10 @@ redef digest_salt = "Please change this value.";
 # @load-sigs frameworks/signatures/detect-windows-shells
 
 # Load all of the scripts that detect software in various protocols.
-# @load protocols/ftp/software
-# @load protocols/smtp/software
-# @load protocols/ssh/software
-# @load protocols/http/software
+@load protocols/ftp/software
+@load protocols/smtp/software
+@load protocols/ssh/software
+@load protocols/http/software
 # The detect-webapps script could possibly cause performance trouble when
 # running on live traffic.  Enable it cautiously.
 #@load protocols/http/detect-webapps
@@ -105,3 +105,5 @@ redef digest_salt = "Please change this value.";
 @load packages
 
 @load kafka.zeek
+
+redef LogAscii::use_json = T;

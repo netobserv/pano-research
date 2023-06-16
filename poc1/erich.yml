@@ -19,7 +19,7 @@ services:
       - ENABLE_PANO=true
 
   zeek:
-    image: "zeek:v5.0.7"
+    image: "pano-zeek:5.0.9"
     container_name: zeek
     depends_on: 
       - kafka
@@ -30,7 +30,7 @@ services:
     command: /usr/local/zeek/bin/zeek -D -B all -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57102  /usr/local/zeek/share/zeek/site/local.zeek
 
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: 'pano-kafka:latest'
     container_name: kafka
     networks:
       - pano-network

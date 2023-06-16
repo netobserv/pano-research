@@ -1,1 +1,1 @@
-docker build ./ -f ./Dockerfile -t zeek:v5.0.7
+docker build ./ -f ./Dockerfile -t pano-zeek:5.0.9

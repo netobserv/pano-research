@@ -1,6 +1,3 @@
-@load packages/zeek-kafka
-
-redef Kafka::tag_json = T;
 redef Kafka::topic_name = "";
 redef Kafka::kafka_conf = table(
 #        ["metadata.broker.list"] = "localhost:9092"

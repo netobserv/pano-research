@@ -1,4 +1,4 @@
-FROM zeek/zeek:lts
+FROM zeek/zeek:5.0.9
 
 ARG kafka=1.7.0
 
@@ -21,6 +21,7 @@ RUN apt-get install -y wget \
      swig \
      zlib1g-dev \
      libsasl2-dev \
+     kafkacat \
      iputils-ping
 
 ENV PATH="/usr/local/zeek/bin:${PATH}"
