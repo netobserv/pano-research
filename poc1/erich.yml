@@ -11,10 +11,10 @@ services:
     networks:
       - pano-network
     ports:
-      - 57102:57102
+      - 57012:57012
     restart: always
     environment:
-      - FLOWS_TARGET_PORT=57102
+      - FLOWS_TARGET_PORT=57012
       - FLOWS_TARGET_HOST=127.0.0.1
       - ENABLE_PANO=true
 
@@ -27,7 +27,7 @@ services:
       - pano-network
     volumes:
      - ./zeek/logs/:/usr/local/zeek/logs:rw
-    command: /usr/local/zeek/bin/zeek -D -B all -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57102  /usr/local/zeek/share/zeek/site/local.zeek
+    command: /usr/local/zeek/bin/zeek -D -B all -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57012  /usr/local/zeek/share/zeek/site/local.zeek
 
   kafka:
     image: 'pano-kafka:latest'

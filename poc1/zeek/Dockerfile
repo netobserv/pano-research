@@ -1,6 +1,7 @@
 FROM zeek/zeek:5.0.9
 
-ARG kafka=1.7.0
+ARG kafka=2.1.1
+#ARG kafka=1.4.2
 
 USER root
 RUN apt-get update
@@ -22,7 +23,10 @@ RUN apt-get install -y wget \
      zlib1g-dev \
      libsasl2-dev \
      kafkacat \
-     iputils-ping
+     iputils-ping \
+     socat \
+     gdb \
+     tcpdump
 
 ENV PATH="/usr/local/zeek/bin:${PATH}"
 
