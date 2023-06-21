@@ -1,0 +1,27 @@
+FROM zeek-debug:5.0.9
+
+ARG kafka=2.1.1
+USER root
+ENV PATH="/usr/local/zeek/bin:${PATH}"
+
+WORKDIR /tmp
+RUN wget -qO- https://github.com/edenhill/librdkafka/archive/v${kafka}.tar.gz | tar xzf -
+WORKDIR /tmp/librdkafka-${kafka}
+RUN ./configure 
+RUN make 
+RUN make install
+ENV LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/local/lib"
+ENV LIBRDKAFKA_ROOT="/usr/local/lib"
+
+RUN pip3 install GitPython semantic-version
+
+RUN chmod +x /usr/local/zeek/bin/zeek 
+RUN chmod +x /usr/local/zeek/bin/zkg 
+
+RUN /usr/local/zeek/bin/zkg install --force zeek-kafka
+RUN /usr/local/zeek/bin/zkg install --force zeek-pcapovertcp-plugin
+
+WORKDIR /usr/local/zeek/logs
+
+COPY ./site/* /usr/local/zeek/share/zeek/site/
+

@@ -1,0 +1,39 @@
+FROM ubuntu:22.04
+
+ARG zeek=5.0.9
+
+USER root
+RUN apt-get update
+RUN apt-get install -y wget \
+     curl \
+     net-tools \
+     cmake \
+     make \
+     gcc \
+     g++ \
+     flex \
+     git \
+     bison \
+     libpcap-dev \
+     libssl-dev \
+     python3-dev \
+     python3-pip \
+     swig \
+     zlib1g-dev \
+     libsasl2-dev \
+     kafkacat \
+     iputils-ping \
+     socat \
+     gdb \
+     tcpdump
+
+ENV PATH="/usr/local/zeek/bin:${PATH}"
+
+WORKDIR /tmp
+RUN wget -qO- https://download.zeek.org/zeek-${zeek}.tar.gz | tar zxf -
+
+WORKDIR /tmp/zeek-${zeek}
+
+RUN ./configure --enable-debug
+RUN make 
+RUN make install
