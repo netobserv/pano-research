@@ -1,15 +1,9 @@
 version: '3'
 
-networks:
-  pano-network:
-    driver: bridge
-
 services:
   netobserv-ebpf-agent:
     image:  quay.io/enahum/netobserv-ebpf-agent:main
     container_name: netobserv-ebpf-agent
-    networks:
-      - pano-network
     ports:
       - 57012:57012
     restart: always
@@ -18,28 +12,24 @@ services:
       - FLOWS_TARGET_HOST=127.0.0.1
       - ENABLE_PANO=true
 
-  zeek:
-    image: "pano-zeek:5.0.9"
-    container_name: zeek
-    depends_on: 
-      - kafka
-    networks:
-      - pano-network
-    volumes:
-     - ./zeek/logs/:/usr/local/zeek/logs:rw
-    command: /usr/local/zeek/bin/zeek -D -B all -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57012  /usr/local/zeek/share/zeek/site/local.zeek
-
   kafka:
     image: 'pano-kafka:latest'
     container_name: kafka
-    networks:
-      - pano-network
     ports:
       - 9092:9092
       - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
         
+  zeek:
+    image: "pano-zeek-debug:5.0.9"
+    container_name: zeek
+    depends_on: 
+      - kafka
+    volumes:
+     - ./zeek/logs/:/usr/local/zeek/logs:rw
+    command: /usr/local/zeek/bin/zeek -D -B plugin-Zeek-PcapOverTcp -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57012  /usr/local/zeek/share/zeek/site/local.zeek
+
   flowlogs-pipeline:
     image: 'pano-flowlogs-pipeline:latest'
     container_name: flowlogs-pipeline
@@ -47,7 +37,5 @@ services:
       - kafka
     ports:
       - 9102:9102
-    networks:
-      - pano-network
     command:
       - --config=/app/docker-pano-kafka-dns.yaml

@@ -107,3 +107,4 @@ redef digest_salt = "Please change this value.";
 @load kafka.zeek
 
 redef LogAscii::use_json = T;
+
