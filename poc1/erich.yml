@@ -2,10 +2,12 @@ version: '3'
 
 services:
   netobserv-ebpf-agent:
-    image:  quay.io/enahum/netobserv-ebpf-agent:main
+    image:  quay.io/shachee/netobserv-ebpf-agent:main
     container_name: netobserv-ebpf-agent
+    privileged: true
+    user: root
     ports:
-      - 57012:57012
+    - 57012:57012
     restart: always
     environment:
       - FLOWS_TARGET_PORT=57012
@@ -16,8 +18,8 @@ services:
     image: 'pano-kafka:latest'
     container_name: kafka
     ports:
-      - 9092:9092
-      - 9093:9093
+    - 9092:9092
+    - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
         
@@ -29,6 +31,7 @@ services:
     volumes:
      - ./zeek/logs/:/usr/local/zeek/logs:rw
     command: /usr/local/zeek/bin/zeek -D -B plugin-Zeek-PcapOverTcp -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57012  /usr/local/zeek/share/zeek/site/local.zeek
+      # command: /bin/bash -c "while true; do echo X; sleep 10; done"
 
   flowlogs-pipeline:
     image: 'pano-flowlogs-pipeline:latest'
@@ -36,6 +39,6 @@ services:
     depends_on: 
       - kafka
     ports:
-      - 9102:9102
+    - 9102:9102
     command:
       - --config=/app/docker-pano-kafka-dns.yaml
