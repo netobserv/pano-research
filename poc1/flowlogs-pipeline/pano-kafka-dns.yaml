@@ -22,27 +22,28 @@ parameters:
     extract: 
       type: aggregates
       aggregates: 
-      - name: aggr_rtt_avg
-        operationType: avg
-        operationKey: rtt
-      - name: aggr_rtt_hist
-        operationType: raw_values
-        operationKey: rtt
-      - name: rcode_count
-        groupByKeys:
-          - qtype_name
-        operationType: count
-        operationKey: qtype
-      - name: query_count
-        groupByKeys:
-          - query
-        operationType: count
-        operationKey: query
-      - name: rcode_count
-        groupByKeys:
-          - rcode_name
-        operationType: count
-        operationKey: rcode
+        rules:
+        - name: aggr_rtt_avg
+          operationType: avg
+          operationKey: rtt
+        - name: aggr_rtt_hist
+          operationType: raw_values
+          operationKey: rtt
+        - name: rcode_count
+          groupByKeys:
+            - qtype_name
+          operationType: count
+          operationKey: qtype
+        - name: query_count
+          groupByKeys:
+            - query
+          operationType: count
+          operationKey: query
+        - name: rcode_count
+          groupByKeys:
+            - rcode_name
+          operationType: count
+          operationKey: rcode
   - name: encode_prom
     encode:
       type: prom
