@@ -1,7 +1,7 @@
 redef Kafka::topic_name = "";
 redef Kafka::kafka_conf = table(
-#        ["metadata.broker.list"] = "localhost:9092"
-        ["metadata.broker.list"] = "kafka:9092"
+        ["metadata.broker.list"] = "localhost:9092"
+#        ["metadata.broker.list"] = "kafka:9092"
 );
 
 event zeek_init()
@@ -44,7 +44,8 @@ event zeek_init()
             $name = "kafka-" + proto,
             $writer = Log::WRITER_KAFKAWRITER,
                 $config = table(
-                    ["metadata.broker.list"] = "kafka:9092"
+			["metadata.broker.list"] = "localhost:9092"
+			# ["metadata.broker.list"] = "kafka:9092"
                 ),
             $path =  proto
         ];
