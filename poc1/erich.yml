@@ -53,3 +53,11 @@ services:
     command:
       - --config=/app/pano-kafka-dns.yaml
     network_mode: "host"
+
+  prometheus:
+    image: 'pano-prometheus'
+    container_name: prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    network_mode: "host"
+
