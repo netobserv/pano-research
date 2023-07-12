@@ -2,15 +2,26 @@ version: '3'
 
 services:
   netobserv-ebpf-agent:
-    image:  quay.io/enahum/netobserv-ebpf-agent:main
+    image:  quay.io/shachee/netobserv-ebpf-agent:main-amd64
     container_name: netobserv-ebpf-agent
-    ports:
-      - 57012:57012
     restart: always
     environment:
       - FLOWS_TARGET_PORT=57012
       - FLOWS_TARGET_HOST=127.0.0.1
       - ENABLE_PANO=true
+      - LOG_LEVEL=debug
+      - AGENT_IP=127.0.0.1
+    cap_add:
+        - CAP_BPF
+        - CAP_PERFMON
+        - CAP_NET_ADMIN
+        - CAP_SYS_RESOURCE
+    volumes:
+        - /sys/kernel/debug:/sys/kernel/debug:rw
+        - /sys:/sys:rw
+    privileged: true
+    user: root
+    network_mode: "host"
 
   kafka:
     image: 'pano-kafka:latest'
@@ -28,7 +39,8 @@ services:
       - kafka
     volumes:
      - ./zeek/logs/:/usr/local/zeek/logs:rw
-    command: /usr/local/zeek/bin/zeek -D -B plugin-Zeek-PcapOverTcp -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::netobserv-ebpf-agent:57012  /usr/local/zeek/share/zeek/site/local.zeek
+    command: /usr/local/zeek/bin/zeek -D -B plugin-Zeek-PcapOverTcp -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::127.0.0.1:57012  /usr/local/zeek/share/zeek/site/local.zeek
+    network_mode: "host"
 
   flowlogs-pipeline:
     image: 'pano-flowlogs-pipeline:latest'
