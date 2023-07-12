@@ -2,17 +2,8 @@ version: '3'
 
 services:
   netobserv-ebpf-agent:
-<<<<<<< HEAD
     image:  quay.io/shachee/netobserv-ebpf-agent:main-amd64
     container_name: netobserv-ebpf-agent
-=======
-    image:  quay.io/shachee/netobserv-ebpf-agent:main
-    container_name: netobserv-ebpf-agent
-    privileged: true
-    user: root
-    ports:
-    - 57012:57012
->>>>>>> 4f6e5669406d24ee53c365285e8250b59498e1be
     restart: always
     environment:
       - FLOWS_TARGET_PORT=57012
