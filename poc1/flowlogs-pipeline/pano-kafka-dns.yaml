@@ -29,7 +29,7 @@ parameters:
         - name: aggr_rtt_hist
           operationType: raw_values
           operationKey: rtt
-        - name: rcode_count
+        - name: qtype_count
           groupByKeys:
             - qtype_name
           operationType: count

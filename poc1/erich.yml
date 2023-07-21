@@ -26,9 +26,9 @@ services:
   kafka:
     image: 'pano-kafka:latest'
     container_name: kafka
-      # ports:
-      # - 9092:9092
-      # - 9093:9093
+    # ports:
+    # - 9092:9092
+    # - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
     network_mode: "host"
@@ -48,16 +48,32 @@ services:
     container_name: flowlogs-pipeline
     depends_on: 
       - kafka
-        #ports:
-        #- 9102:9102
+    # ports:
+    # - 9102:9102
     command:
       - --config=/app/pano-kafka-dns.yaml
     network_mode: "host"
 
   prometheus:
     image: 'pano-prometheus'
-    container_name: prometheus
+    container_name: prometheus 
+    # ports: 
+    #   - 9090 
     command:
       - --config.file=/etc/prometheus/prometheus.yml
+    network_mode: "host"
+
+  grafana:
+    image: 'grafana/grafana:latest'
+    container_name: grafana
+    # ports:
+    #  - 3000:3000
+    user: '0'
+    volumes:
+      - '$PWD/grafana/data:/var/lib/grafana'
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin #TODO
+      - GF_SECURITY_ADMIN_PASSWORD=password #TODO
     network_mode: "host"
 
