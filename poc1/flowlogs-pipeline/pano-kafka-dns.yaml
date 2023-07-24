@@ -55,6 +55,8 @@ parameters:
           valueKey: recent_op_value
           labels:
             - rcode_name
+        - name: query_count
+          type: counter
         - name: query_total
           type: counter
           valueKey: recent_op_value
@@ -75,6 +77,7 @@ parameters:
            - 0.01
            - 0.10
            - 1.00
+           - 10.00
         - name: rtt_avg
           type: gauge
           valueKey: recent_op_value
