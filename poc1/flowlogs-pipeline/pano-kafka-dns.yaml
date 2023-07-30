@@ -9,6 +9,18 @@ pipeline:
     follows: ingest_kafka
   - name: encode_prom
     follows: aggregate_values
+  - name: filter_query
+    follows: aggregate_values
+  - name: encode_prom_query
+    follows: filter_query
+  - name: filter_qtype
+    follows: aggregate_values
+  - name: encode_prom_qtype
+    follows: filter_qtype
+  - name: filter_rcode
+    follows: aggregate_values
+  - name: encode_prom_rcode
+    follows: filter_rcode
 parameters:
   - name: ingest_kafka
     ingest:
@@ -50,23 +62,8 @@ parameters:
       prom:
         prefix: pano_dns_
         metrics:
-        - name: rcode_total
-          type: counter
-          valueKey: recent_op_value
-          labels:
-            - rcode_name
         - name: query_count
           type: counter
-        - name: query_total
-          type: counter
-          valueKey: recent_op_value
-          labels:
-           - query
-        - name: qtype_total
-          type: counter
-          valueKey: recent_op_value
-          labels:
-            - qtype_name
         - name: rtt_histogram
           type: agg_histogram
           valueKey: recent_raw_values
@@ -82,4 +79,57 @@ parameters:
           type: gauge
           valueKey: recent_op_value
           filter: {key: name, value: aggr_rtt_avg}
-        
+  - name: filter_query
+    transform:
+      type: filter
+      filter:
+        rules:
+        - input: query
+          type: remove_entry_if_doesnt_exist
+  - name: filter_qtype
+    transform:
+      type: filter
+      filter:
+        rules:
+        - input: qtype_name
+          type: remove_entry_if_doesnt_exist
+  - name: filter_rcode
+    transform:
+      type: filter
+      filter:
+        rules:
+        - input: rcode_name
+          type: remove_entry_if_doesnt_exist
+  - name: encode_prom_query
+    encode:
+      type: prom
+      prom:
+        prefix: pano_dns_
+        metrics:
+        - name: query_total
+          type: counter
+          valueKey: recent_op_value
+          labels:
+            - query
+  - name: encode_prom_qtype
+    encode:
+      type: prom
+      prom:
+        prefix: pano_dns_
+        metrics:
+        - name: qtype_total
+          type: counter
+          valueKey: recent_op_value
+          labels:
+            - qtype_name
+  - name: encode_prom_rcode
+    encode:
+      type: prom
+      prom:
+        prefix: pano_dns_
+        metrics:
+        - name: rcode_total
+          type: counter
+          valueKey: recent_op_value
+          labels:
+            - rcode_name
