@@ -108,3 +108,10 @@ redef digest_salt = "Please change this value.";
 
 redef LogAscii::use_json = T;
 
+redef Log::default_field_name_map = {
+     ["id.orig_h"] = "id_orig_h",
+     ["id.orig_p"] = "id_orig_p",
+     ["id.resp_h"] = "id_resp_h",
+     ["id.resp_p"] = "id_resp_p"
+};
+
