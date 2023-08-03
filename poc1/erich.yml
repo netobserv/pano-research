@@ -2,13 +2,14 @@ version: '3'
 
 services:
   netobserv-ebpf-agent:
-    image:  quay.io/shachee/netobserv-ebpf-agent:main-amd64
+    image:  quay.io/nahum/netobserv-ebpf-agent:main-amd64
     container_name: netobserv-ebpf-agent
     restart: always
     environment:
-      - FLOWS_TARGET_PORT=57012
+      - PCA_SERVER_PORT=57012
       - FLOWS_TARGET_HOST=127.0.0.1
-      - ENABLE_PANO=true
+      - ENABLE_PCA=true
+      - PCA_FILTER=udp,53
       - LOG_LEVEL=debug
       - AGENT_IP=127.0.0.1
     cap_add:

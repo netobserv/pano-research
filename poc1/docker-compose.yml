@@ -1,65 +1,80 @@
 version: '3'
 
-networks:
-  pano-network:
-    driver: bridge
-
 services:
+  netobserv-ebpf-agent:
+    image:  quay.io/nahum/netobserv-ebpf-agent:main-amd64
+    container_name: netobserv-ebpf-agent
+    restart: always
+    environment:
+      - PCA_SERVER_PORT=57012
+      - FLOWS_TARGET_HOST=127.0.0.1
+      - ENABLE_PCA=true
+      - PCA_FILTER=udp,53
+      - LOG_LEVEL=debug
+      - AGENT_IP=127.0.0.1
+    cap_add:
+        - CAP_BPF
+        - CAP_PERFMON
+        - CAP_NET_ADMIN
+        - CAP_SYS_RESOURCE
+    volumes:
+        - /sys/kernel/debug:/sys/kernel/debug:rw
+        - /sys:/sys:rw
+    privileged: true
+    user: root
+    network_mode: "host"
+
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: 'pano-kafka:latest'
     container_name: kafka
-    networks:
-      - pano-network
-    ports:
-      - 9092:9092
-      - 9093:9093
+    # ports:
+    # - 9092:9092
+    # - 9093:9093
     environment:
       - ALLOW_PLAINTEXT_LISTENER=yes
+    network_mode: "host"
         
+  zeek:
+    image: "pano-zeek-debug:5.0.9"
+    container_name: zeek
+    depends_on: 
+      - kafka
+    volumes:
+     - ./zeek/logs/:/usr/local/zeek/logs:rw
+    command: /usr/local/zeek/bin/zeek -D -B plugin-Zeek-PcapOverTcp -C -e 'redef LogAscii::use_json = T;' -i pcapovertcp::127.0.0.1:57012  /usr/local/zeek/share/zeek/site/local.zeek
+    network_mode: "host"
+
+  flowlogs-pipeline:
+    image: 'pano-flowlogs-pipeline:latest'
+    container_name: flowlogs-pipeline
+    depends_on: 
+      - kafka
+    # ports:
+    # - 9102:9102
+    command:
+      - --config=/app/pano-kafka-dns.yaml
+    network_mode: "host"
+
+  prometheus:
+    image: 'pano-prometheus'
+    container_name: prometheus 
+    # ports: 
+    #   - 9090 
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    network_mode: "host"
+
   grafana:
     image: 'grafana/grafana:latest'
     container_name: grafana
-    networks:
-      - pano-network
-    ports:
-      - 9094:9094
+    # ports:
+    #  - 3000:3000
+    user: '0'
     volumes:
-      - grafana-data:/var/lib/grafana
-    restart: always
+      - '$PWD/grafana/data:/var/lib/grafana'
+    restart: unless-stopped
     environment:
       - GF_SECURITY_ADMIN_USER=admin #TODO
       - GF_SECURITY_ADMIN_PASSWORD=password #TODO
-
-  prometheus:
-    image: prom/prometheus:v2.30.3 # TODO which version
-    container_name: prometheus
-    networks:
-      - pano-network
-    ports:
-      - 9095:9095
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-    restart: always 
-
-  pano-netobserv-agent:
-    image:  netobserv-ebpf-agent/bin/netobserv-ebpf-agent
-    container_name: netobserv-ebpf-agent
-    networks:
-      - pano-network
-    ports: 
-      - 57102:57102
-    volumes:
-      - :./netobserv-ebpf-agent/bin # TODO Fix location of agent
-    restart: always
-
-  zeek:
-    image: "zeek:v5.0.7"
-    container_name: zeek
-    networks:
-      - pano-network
-    volumes:
-     - ./zeek/logs/:/usr/local/zeek/logs:rw
-    command: /usr/local/zeek/bin/zeek -C -i pcapovertcp::127.0.0.1:57102  /usr/local/zeek/share/zeek/site/local.zeek
+    network_mode: "host"
 
