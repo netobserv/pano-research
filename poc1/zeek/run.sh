@@ -7,7 +7,8 @@ IP_ADDR=pano.sl.cloud9.ibm.com
 
 echo IP_ADDR is $IP_ADDR
 cd logs
+	# -D -C -B plugin-Zeek-PcapOverTcp \
 sudo /usr/local/zeek/bin/zeek \
-	-D -C -B plugin-Zeek-PcapOverTcp \
+	-D -C \
 	-i pcapovertcp::$IP_ADDR:57012 \
 	/usr/local/zeek/share/zeek/site/local.zeek
