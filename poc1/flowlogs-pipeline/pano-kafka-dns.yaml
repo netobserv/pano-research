@@ -5,13 +5,16 @@ metricsSettings:
   prefix: pano_dns_
 pipeline:
   - name: ingest
-# query
-  - name: aggregate_query
+# query_count
+  - name: prom_query_count
     follows: ingest
-  - name: filter_query
-    follows: aggregate_query
-  - name: prom_query
-    follows: filter_query
+# query_name
+  - name: aggregate_query_name
+    follows: ingest
+  - name: filter_query_name
+    follows: aggregate_query_name
+  - name: prom_query_name
+    follows: filter_query_name
 # qtype
   - name: aggregate_qtype
     follows: ingest
@@ -45,31 +48,40 @@ parameters:
         topic: dns
         decoder:
           type: json
-# query
-  - name: aggregate_query
+# query_count
+  - name: prom_query_count
+    encode:
+      type: prom
+      prom:
+        prefix: pano_dns_
+        metrics:
+        - name: query_count
+          type: counter
+# query_name
+  - name: aggregate_query_name
     extract:
       type: aggregates
       aggregates:
         rules:
-        - name: query_count
+        - name: query_name
           groupByKeys:
             - query
           operationType: count
           operationKey: query
-  - name: filter_query
+  - name: filter_query_name
     transform:
       type: filter
       filter:
         rules:
         - input: query
           type: remove_entry_if_doesnt_exist
-  - name: prom_query
+  - name: prom_query_name
     encode:
       type: prom
       prom:
         prefix: pano_dns_
         metrics:
-        - name: query_total
+        - name: query_name
           type: counter
           valueKey: recent_op_value
           labels:
