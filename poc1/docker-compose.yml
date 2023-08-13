@@ -35,7 +35,7 @@ services:
     network_mode: "host"
         
   zeek:
-    image: "pano-zeek-debug:5.0.9"
+    image: "pano-zeek:5.0.9"
     container_name: zeek
     depends_on: 
       - kafka
