@@ -1,2 +1,2 @@
 #!/bin/bash
-docker pull guessi/dnsperf:alpine
+docker build ./ -f ./Dockerfile -t pano-dnsperf

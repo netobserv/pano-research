@@ -1,2 +1,2 @@
 #!/bin/bash
-docker run -d guessi/dnsperf:alpine -s 10.0.80.11 -d sample-query-data
+docker run -d guessi/dnsperf:alpine -s 8.8.8.8 -d dns-entry-list
