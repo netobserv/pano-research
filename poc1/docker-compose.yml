@@ -78,9 +78,9 @@ services:
       - GF_SECURITY_ADMIN_PASSWORD=password #TODO
     network_mode: "host"
 
-  dnsperf:
+  dnsperf1:
     image: pano-dnsperf
-    container_name: dnsperf
+    container_name: dnsperf1
     depends_on:
       - netobserv-ebpf-agent
       - kafka
@@ -88,7 +88,22 @@ services:
       - flowlogs-pipeline
       - prometheus
       - grafana
-    volumes:
-      - '$PWD/dnsperf/dns-entry-list:/opt/queryfile'
+    environment:
+      - DNS_SERVER_ADDR=8.8.8.8
+      - MAX_TEST_SECONDS=3000
     network_mode: host
-    command: dnsperf -d /opt/queryfile -t 20 -l 3000 -Q 1000 -s 8.8.8.8
+  
+  dnsperf2:
+    image: pano-dnsperf
+    container_name: dnsperf2
+    depends_on:
+      - netobserv-ebpf-agent
+      - kafka
+      - zeek
+      - flowlogs-pipeline
+      - prometheus
+      - grafana
+    environment:
+      - DNS_SERVER_ADDR=9.0.0.1
+      - MAX_TEST_SECONDS=3000
+    network_mode: host
