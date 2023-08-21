@@ -24,3 +24,7 @@ echo building zeek...
 cd zeek
 ./build.sh
 cd ..
+echo building dnsperf...
+cd dnsperf
+./build.sh
+cd ..
