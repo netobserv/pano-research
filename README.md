@@ -42,13 +42,15 @@ You will need the following to run the demo:
 - Git - to check out the tree
 - Bash - to build the docker images from standard components
 - Docker and docker compose that support "host" networking
-- Relatively new Linux Kernel that supports CAP_BPF
+- A relatively new Linux Kernel that supports CAP_BPF.  We have developed it on `5.15.0-78-generic`.
 
 ### Check-out the Demo
 
 Run 
 
-```git clone git@github.com:netobserv/pano-research.git```
+```
+git clone git@github.com:netobserv/pano-research.git
+```
 
 to check out the source tree.
 
@@ -56,7 +58,9 @@ to check out the source tree.
 
 Run `build-me.sh` in the PoC1 subdirectory:
 
-```build-me.sh```
+```
+build-me.sh
+```
 
 You should see various component images downloading and some building.
 
