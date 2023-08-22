@@ -18,17 +18,21 @@ Welcome to the site for Payload Aware Network Observability (PANO).
 Changes needed to the components consisted of the following:
 
 - Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
-- An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to [Zeek Network Security Monitoring Tool](https://zeek.org/)
-- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline): Config file [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
-- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard: Dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
+- An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
+- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Get the config file [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
+- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Get the dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
 
 ## Use Case: DNS
 
+To illustrate PANO, we demonstrate a use case with DNS.  We configure the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to capture all packets on UDP Port 53, the default DNS port.  
+
 ## Workload
 
-- DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf)
+In addition to our pipeline, we use two instances of a DNS load tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf), which queries 8.8.8.8 (Google) and 9.0.0.1 (IBM) simultaneously, using a sample DNS [querylist](poc1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com
 
-## Demo
+## Running the Demo
+
+The following is needed to demo PANO's capabilities:
 
 ### Requirements
 
