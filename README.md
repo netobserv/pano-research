@@ -10,10 +10,17 @@ Welcome to the site for Payload Aware Network Observability (PANO).
 - The [Zeek Network Security Monitoring Tool](https://zeek.org/)
 - Apache [Kafka](https://kafka.apache.org/)
 - RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline)
-- CNCF's [Prometheus] (https://prometheus.io/)
+- CNCF's [Prometheus](https://prometheus.io/)
 - Grafana Labs [Grafana](https://grafana.com/)
 
 ## Changes
+
+Changes needed to the components consisted of the following:
+
+- Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
+- An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to [Zeek Network Security Monitoring Tool](https://zeek.org/)
+- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline): Config file [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
+- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard: Dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
 
 ## Use Case: DNS
 
