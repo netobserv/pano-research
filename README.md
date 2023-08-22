@@ -6,11 +6,20 @@ Welcome to the site for Payload Aware Network Observability (PANO).
 
 ## Components
 
+- RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent)
+- The [Zeek Network Security Monitoring Tool](https://zeek.org/)
+- Apache [Kafka](https://kafka.apache.org/)
+- RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline)
+- CNCF's [Prometheus] (https://prometheus.io/)
+- Grafana Labs [Grafana](https://grafana.com/)
+
 ## Changes
 
 ## Use Case: DNS
 
 ## Workload
+
+- DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf)
 
 ## Demo
 
@@ -68,6 +77,6 @@ In the lower left corner, click on the `PANO DNS Metrics`.
 
 You should see something like the following:
 
-[Grafana DNS Page](images/grafana-pano.png)
+![Grafana DNS Page](images/grafana-pano.png)
 
 (at first the page will not display anything, but in about 10-15 seconds it should start to populate)
