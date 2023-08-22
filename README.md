@@ -48,7 +48,7 @@ You will need the following to run the demo:
 
 Run 
 
-` ``git clone git@github.com:netobserv/pano-research.git```
+```git clone git@github.com:netobserv/pano-research.git```
 
 to check out the source tree.
 
@@ -56,7 +56,7 @@ to check out the source tree.
 
 Run `build-me.sh` in the PoC1 subdirectory:
 
-`build-me.sh`
+```build-me.sh```
 
 You should see various component images downloading and some building.
 
@@ -70,14 +70,14 @@ docker compose up -d
 
 You should see the various components come up:
 ```
-Creating kafka                ... done
-Creating grafana              ... done
 Creating netobserv-ebpf-agent ... done
-Creating prometheus           ... done
-Creating flowlogs-pipeline    ... done
 Creating zeek                 ... done
-Creating dnsperf2             ... done
+Creating kafka                ... done
+Creating flowlogs-pipeline    ... done
+Creating prometheus           ... done
+Creating grafana              ... done
 Creating dnsperf1             ... done
+Creating dnsperf2             ... done
 ```
 
 Now in a browser window, go to:
