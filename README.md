@@ -4,6 +4,11 @@ Welcome to the site for Payload Aware Network Observability (PANO).
 
 ## Background
 
+As an observability tool, PANO consists of a pipeline.  The pipeline captures raw packets,
+analyzes them, outputs metrics, and displays them on a dashboard.
+
+More detail can be found in a PPT deck [here](Pano-Web-Site.pptx)
+
 ## Components
 
 - RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent)
@@ -19,8 +24,8 @@ Changes needed to the components consisted of the following:
 
 - Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
 - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
-- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Get the config file [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
-- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Get the dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
+- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
+- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
 
 ## Use Case: DNS
 
@@ -32,17 +37,19 @@ In addition to our pipeline, we use two instances of a DNS load tool, DNS-OARC's
 
 ## Running the Demo
 
-We have a demo of PANO's capabilities running in Docker. The following is needed to run the demo:
+We have a demo of PANO's capabilities running in Docker. 
+
+A recording of the demo will be made available soon.
 
 ### Requirements
 
 You will need the following to run the demo:
 
-- Linux
+- Linux (tested on `Ubuntu 22.04.3 LTS`).
+- A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
 - Git - to check out the tree
 - Bash - to build the docker images from standard components
 - Docker and docker compose that support "host" networking
-- A relatively new Linux Kernel that supports CAP_BPF.  We have developed it on `5.15.0-78-generic`.
 
 ### Check-out the Demo
 
@@ -90,7 +97,7 @@ Now in a browser window, go to:
 http://pano.sl.cloud9.ibm.com:3000/
 ```
 
-(if you are running on a different machine, substitute `your-domain-name` for `pano.sl.cloud9.ibm.com`)
+(if you are running on a different machine, substitute `your-machine-name` for `pano.sl.cloud9.ibm.com`)
 
 The first time you do this, Grafana will ask you to log in.  The credentials are "admin" and "admin".  Don't change them, skip the password reset.
 
