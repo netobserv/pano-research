@@ -1,15 +1,25 @@
-# PANO -- Payload Aware Network Observability
+# Payload Aware Network Observability (PANO)
 
-Welcome to the site for Payload Aware Network Observability (PANO).
+Welcome to the project site for Payload Aware Network Observability (PANO).
+
+The goal of this project is to provide observability to networking levels 5, 6, and 7.  
+Typical observability tools only look at layers 3 and 4, outputing flow logs, which
+summarize traffic flow by 5-tuple..
+A great deal of information can be captured looking at higher level protocols,
+such as DNS, HTTP, LDAP, SSL/TLS, SIP, etc.
+As an example of PANO's utility, we present a demo using DNS.
 
 ## Background
 
-As an observability tool, PANO consists of a pipeline.  The pipeline captures raw packets,
-analyzes them, outputs metrics, and displays them on a dashboard.
+As an observability tool, PANO consists of a pipeline of service components.  
+The pipeline captures raw packets, analyzes them, outputs metrics, and displays them on a dashboard.
+A major difference with other tools is that it does not depend on the support of a
+specific server (e.g., a specific DNS server such as [coredns](https://coredns.io/).  
+It uses raw packets captured on the network to reconstruct the behavior of the server.
 
 More detail can be found in a PPT deck [here](Pano-Web-Site.pptx)
 
-## Components
+## Pipeline Components
 
 - RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent)
 - The [Zeek Network Security Monitoring Tool](https://zeek.org/)
@@ -18,7 +28,7 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx)
 - CNCF's [Prometheus](https://prometheus.io/)
 - Grafana Labs [Grafana](https://grafana.com/)
 
-## Changes
+## Changes We Made
 
 Changes needed to the components consisted of the following:
 
