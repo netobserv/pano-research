@@ -82,7 +82,7 @@ to check out the source tree.
 
 ### Building the Demo
 
-Run `build-me.sh` in the PoC1 subdirectory:
+Run `build-me.sh` in the demo1 subdirectory:
 
 ```
 build-me.sh
@@ -92,7 +92,7 @@ You should see various component images downloading and some building.
 
 ### Running the Demo
 
-Run `docker compose up -d` in the PoC1 subdirectory:
+Run `docker compose up -d` in the demo1 subdirectory:
 
 ```
 docker compose up -d
