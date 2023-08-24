@@ -14,19 +14,19 @@ example of PANO's utility, we present a demo using DNS.
 As an observability tool, PANO consists of a pipeline of service components.  The pipeline 
 captures raw packets, analyzes them, outputs metrics, and displays them on a dashboard.  A 
 major difference with other tools is that it does not depend on the support of a
-specific server (e.g., a specific DNS server such as [coredns](https://coredns.io/).  It 
+specific server (e.g., a specific DNS server such as [coredns](https://coredns.io/)).  It 
 uses raw packets captured on the network to reconstruct the behavior of the server.
 
-More detail can be found in a PPT deck [here](Pano-Web-Site.pptx)
+More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 
 ## Pipeline Components
 
-- RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent)
-- The [Zeek Network Security Monitoring Tool](https://zeek.org/)
-- Apache [Kafka](https://kafka.apache.org/)
-- RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline)
-- CNCF's [Prometheus](https://prometheus.io/)
-- Grafana Labs [Grafana](https://grafana.com/)
+- RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) -- to capture relevant packets
+- The [Zeek Network Security Monitoring Tool](https://zeek.org/) -- to process relevant packets and emit resulting logs
+- Apache [Kafka](https://kafka.apache.org/) -- to communicate between components
+- RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) -- to convert logs to metrics
+- CNCF's [Prometheus](https://prometheus.io/) -- to scrape and store metrics
+- Grafana Labs [Grafana](https://grafana.com/) -- to display the metrics
 
 ## Changes We Made
 
@@ -35,7 +35,7 @@ Changes needed to the components consisted of the following:
 - Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
 - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
 - Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
-- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard [here](poc1/grafana/pano-dns-dashboard.json). 
+- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](poc1/grafana/pano-dns-dashboard.json). 
 
 ## Use Case: DNS
 
