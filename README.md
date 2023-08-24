@@ -120,7 +120,7 @@ http://pano.sl.cloud9.ibm.com:3000/
 
 The first time you do this, you will see the following:
 
-![Grafana Login Page](images/grafana-login.png)
+![Grafana Welcome Page](images/grafana-welcome.png)
 
 Grafana is asking you to log in.  The credentials are "admin" and "admin".  Please don't change them, **skip** the password change.
 
