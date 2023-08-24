@@ -10,13 +10,13 @@ such as DNS, HTTP, LDAP, SSL/TLS, SIP, etc.  As an
 example of PANO's utility, we present a demo using DNS.
 
 While several approaches to this problem are possible, we sought to take a
-balanced technique, in terms of trading off efficiency vs. generality.
+balanced one, in terms of trading off efficiency vs. generality.
 For example, while we could do everything in kernel space with eBPF, that
 would require constant changes to the kernel.  Similarly, using python
 for everything would be fast and simple, but slow due to the generality.
-Instead, we strike a balance: we use eBPF for packet filtering and capture, 
-for performance reasons, and C++ or Go in user-space for efficienty.
-Where possible, we re-use existing tools where it makes sense.
+Instead, we strike a middle ground: we use eBPF in the kernel for packet filtering and capture, 
+for performance reasons, and C++ or Go in user-space for efficient flexibility.
+Where possible, where it makes sense, we re-use existing industry-standard tools.
 
 ## Background
 
@@ -43,8 +43,8 @@ Changes needed to the components consisted of the following:
 
 - Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
 - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
-- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](poc1/flowlogs-pipeline/pano-kafka-dns.yaml).
-- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](poc1/grafana/pano-dns-dashboard.json). 
+- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
+- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
 
 ## Use Case: DNS
 
@@ -52,7 +52,7 @@ To illustrate PANO, we demonstrate a use case with DNS.  We configure the [NetOb
 
 ## Workload
 
-In addition to our pipeline, we use two instances of a DNS load tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf), which queries 8.8.8.8 (Google) and 9.0.0.1 (IBM) simultaneously, using a sample DNS [querylist](poc1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com.
+In addition to our pipeline, we use two instances of a DNS load tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf), which queries 8.8.8.8 (Google) and 9.0.0.1 (IBM) simultaneously, using a sample DNS [querylist](demo1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com.
 
 ## Running the Demo
 
