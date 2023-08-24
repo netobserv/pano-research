@@ -52,7 +52,9 @@ To illustrate PANO, we demonstrate a use case with DNS.  We configure the [NetOb
 
 ## Workload
 
-In addition to our pipeline, we use two instances of a DNS load tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf), which queries 8.8.8.8 (Google) and 9.0.0.1 (IBM) simultaneously, using a sample DNS [querylist](demo1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com.
+In addition to our pipeline, we use two instances of a DNS load generation tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf).  One 
+instance queries 8.8.8.8 (Google's DNS server) and another instance queries 9.0.0.1 (IBM's server) simultaneously, using a sample DNS 
+[querylist](demo1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com.
 
 ## Running the Demo
 
@@ -64,11 +66,11 @@ A recording of the demo will be made available soon.
 
 You will need the following to run the demo:
 
-- A Linux bare-metal or VM (we tested on `Ubuntu 22.04.3 LTS`).
+- A Linux bare-metal machine or VM (we tested on `Ubuntu 22.04.3 LTS`).
 - A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
 - Git - to check out the source tree
 - Bash - to build the docker images from standard components
-- Docker and docker compose that support "host" networking
+- Docker and docker-compose that support "host" networking
 
 ### Check-out the Demo
 
