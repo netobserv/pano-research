@@ -118,7 +118,11 @@ http://pano.sl.cloud9.ibm.com:3000/
 
 (if you are running on a different machine, substitute `your-machine-name` for `pano.sl.cloud9.ibm.com`)
 
-The first time you do this, Grafana will ask you to log in.  The credentials are "admin" and "admin".  Don't change them, skip the password reset.
+The first time you do this, you will see the following:
+
+![Grafana Welcome Page](images/grafana-login.png)
+
+Grafana is asking you to log in.  The credentials are "admin" and "admin".  Please don't change them, **skip** the password change.
 
 You should see a Welcome page:
 
