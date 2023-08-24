@@ -9,6 +9,15 @@ deal of information can be captured looking at higher level protocols,
 such as DNS, HTTP, LDAP, SSL/TLS, SIP, etc.  As an 
 example of PANO's utility, we present a demo using DNS.
 
+While several approaches to this problem are possible, we sought to take a
+balanced technique, in terms of trading off efficiency vs. generality.
+For example, while we could do everything in kernel space with eBPF, that
+would require constant changes to the kernel.  Similarly, using python
+for everything would be fast and simple, but slow due to the generality.
+Instead, we strike a balance: we use eBPF for packet filtering and capture, 
+for performance reasons, and C++ or Go in user-space for efficienty.
+Where possible, we re-use existing tools where it makes sense.
+
 ## Background
 
 As an observability tool, PANO consists of a pipeline of service components.  The pipeline 
@@ -26,7 +35,7 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 - Apache [Kafka](https://kafka.apache.org/) -- to communicate between components
 - RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) -- to convert logs to metrics
 - CNCF's [Prometheus](https://prometheus.io/) -- to scrape and store metrics
-- Grafana Labs [Grafana](https://grafana.com/) -- to display the metrics
+- Grafana Labs [Grafana](https://grafana.com/) -- to display the metrics via a dashboard
 
 ## Changes We Made
 
@@ -55,9 +64,9 @@ A recording of the demo will be made available soon.
 
 You will need the following to run the demo:
 
-- Linux (tested on `Ubuntu 22.04.3 LTS`).
+- A Linux bare-metal or VM (tested on `Ubuntu 22.04.3 LTS`).
 - A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
-- Git - to check out the tree
+- Git - to check out the source tree
 - Bash - to build the docker images from standard components
 - Docker and docker compose that support "host" networking
 
