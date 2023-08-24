@@ -34,14 +34,14 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 - The [Zeek Network Security Monitoring Tool](https://zeek.org/) -- to process relevant packets and emit resulting logs
 - Apache [Kafka](https://kafka.apache.org/) -- to communicate between components
 - RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) -- to convert logs to metrics
-- CNCF's [Prometheus](https://prometheus.io/) -- to scrape and store metrics
-- Grafana Labs [Grafana](https://grafana.com/) -- to display the metrics via a dashboard
+- CNCF's [Prometheus](https://prometheus.io/) -- to scrape metrics and centrally store them
+- Grafana Labs [Grafana](https://grafana.com/) -- to visualize and display the metrics via a dashboard
 
 ## Changes We Made
 
 Changes needed to the components consisted of the following:
 
-- Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs;
+- Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs
 - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
 - Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
 - Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
@@ -64,7 +64,7 @@ A recording of the demo will be made available soon.
 
 You will need the following to run the demo:
 
-- A Linux bare-metal or VM (tested on `Ubuntu 22.04.3 LTS`).
+- A Linux bare-metal or VM (we tested on `Ubuntu 22.04.3 LTS`).
 - A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
 - Git - to check out the source tree
 - Bash - to build the docker images from standard components
@@ -134,4 +134,4 @@ You should see something like the following:
 
 ![Grafana DNS Page](images/grafana-pano.png)
 
-(at first the page will not display anything, but in about 10-15 seconds it should start to populate)
+At first, the page will not display anything, but in about 10-15 seconds it should start to populate.
