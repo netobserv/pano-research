@@ -243,7 +243,6 @@
           "custom": {
             "axisCenteredZero": false,
             "axisColorMode": "text",
-            "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "bars",
@@ -271,6 +270,7 @@
               "mode": "dashed+area"
             }
           },
+          "displayName": "${__field.labels.id_resp_h}",
           "mappings": [],
           "max": 10,
           "min": 1e-8,
@@ -297,6 +297,109 @@
         "y": 8
       },
       "id": 4,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "expr": "pano_dns_rtt_avg",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Average Response Time (seconds)",
+      "transformations": [
+        {
+          "id": "renameByRegex",
+          "options": {
+            "regex": "\"8\\.8\\.8\\.8\"",
+            "renamePattern": "\"Google DNS\""
+          }
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "Response Time of DNS response in ms",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "hue",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "normal"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.labels.id_resp_h}",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 8
+      },
+      "id": 10,
       "options": {
         "legend": {
           "calcs": [],
@@ -367,6 +470,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.labels.histogram_quantile}",
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -387,8 +491,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
-        "y": 8
+        "x": 0,
+        "y": 16
       },
       "id": 5,
       "options": {
@@ -485,7 +589,7 @@
         "type": "prometheus",
         "uid": "${DS_PROMETHEUS}"
       },
-      "description": "Return code (NOERROR, NXDOMAIN, etc)",
+      "description": "Histogram of Response Time (.99, .9, .75, etc)",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -497,8 +601,8 @@
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 52,
+            "drawStyle": "line",
+            "fillOpacity": 50,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -506,16 +610,17 @@
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 5,
+            "lineWidth": 2,
             "pointSize": 5,
             "scaleDistribution": {
-              "type": "linear"
+              "log": 10,
+              "type": "log"
             },
             "showPoints": "auto",
             "spanNulls": false,
             "stacking": {
               "group": "A",
-              "mode": "none"
+              "mode": "normal"
             },
             "thresholdsStyle": {
               "mode": "off"
@@ -536,40 +641,15 @@
             ]
           }
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "{instance=\"localhost:9102\", job=\"pano-flp\", rcode_name=\"NOERROR\"}"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
+        "x": 12,
         "y": 16
       },
-      "id": 3,
+      "id": 13,
       "options": {
         "legend": {
           "calcs": [],
@@ -589,6 +669,151 @@
             "uid": "${DS_PROMETHEUS}"
           },
           "editorMode": "builder",
+          "expr": "histogram_quantile(0.5, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
+          "instant": false,
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "expr": "histogram_quantile(0.75, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
+          "hide": false,
+          "instant": false,
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "expr": "histogram_quantile(0.9, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
+          "hide": false,
+          "instant": false,
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "expr": "histogram_quantile(0.95, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
+          "hide": false,
+          "instant": false,
+          "range": true,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "exemplar": false,
+          "expr": "histogram_quantile(0.99, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
+          "hide": false,
+          "instant": false,
+          "range": true,
+          "refId": "E"
+        }
+      ],
+      "title": "DNS Response Time Histogram",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${DS_PROMETHEUS}"
+      },
+      "description": "Return code (NOERROR, NXDOMAIN, etc)",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "displayName": "${__field.labels.rcode_name}",
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "id": 11,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "table",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${DS_PROMETHEUS}"
+          },
+          "editorMode": "builder",
+          "exemplar": false,
           "expr": "rate(pano_dns_rcode_total[$__rate_interval])",
           "instant": false,
           "range": true,
@@ -615,6 +840,7 @@
               "viz": false
             }
           },
+          "displayName": "${__field.labels.rcode_name}",
           "mappings": []
         },
         "overrides": []
@@ -623,16 +849,20 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 24
       },
-      "id": 7,
+      "id": 14,
       "options": {
+        "displayLabels": [
+          "percent"
+        ],
         "legend": {
-          "displayMode": "table",
+          "displayMode": "list",
           "placement": "right",
-          "showLegend": true
+          "showLegend": true,
+          "values": []
         },
-        "pieType": "pie",
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -679,15 +909,15 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "drawStyle": "bars",
-            "fillOpacity": 49,
-            "gradientMode": "none",
+            "fillOpacity": 100,
+            "gradientMode": "hue",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
             "lineInterpolation": "linear",
-            "lineWidth": 5,
+            "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
@@ -702,6 +932,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.labels.qtype_name}",
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -723,9 +954,9 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 24
+        "y": 32
       },
-      "id": 2,
+      "id": 12,
       "options": {
         "legend": {
           "calcs": [],
@@ -771,6 +1002,7 @@
               "viz": false
             }
           },
+          "displayName": "${__field.labels.qtype_name}",
           "mappings": []
         },
         "overrides": []
@@ -779,16 +1011,20 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 24
+        "y": 32
       },
-      "id": 8,
+      "id": 15,
       "options": {
+        "displayLabels": [
+          "percent"
+        ],
         "legend": {
-          "displayMode": "table",
+          "displayMode": "list",
           "placement": "right",
-          "showLegend": true
+          "showLegend": true,
+          "values": []
         },
-        "pieType": "pie",
+        "pieType": "donut",
         "reduceOptions": {
           "calcs": [
             "lastNotNull"
@@ -833,6 +1069,6 @@
   "timezone": "",
   "title": "PANO DNS Metrics",
   "uid": "cfae8ead-2e7a-4f88-9dc4-1f2014cb76ff",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }
