@@ -45,6 +45,8 @@ Changes needed to the components consisted of the following:
 - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
 - Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
 - Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
+- Apache [Kafka](https://kafka.apache.org/) -- No changes
+- CNCF's [Prometheus](https://prometheus.io/) -- No changes
 
 ## Use Case: DNS
 
@@ -53,7 +55,7 @@ To illustrate PANO, we demonstrate a use case with DNS.  We configure the [NetOb
 ## Workload
 
 In addition to our pipeline, we use two instances of a DNS load generation tool, DNS-OARC's [dnsperf](https://github.com/DNS-OARC/dnsperf).  One 
-instance queries 8.8.8.8 (Google's DNS server) and another instance queries 9.0.0.1 (IBM's server) simultaneously, using a sample DNS 
+instance queries 8.8.8.8 (Google's DNS server) and another instance queries 9.0.0.1 (IBM's DNS server) simultaneously, using a sample DNS 
 [querylist](demo1/dnsperf/dns-entry-list) from a trace taken at yorktown.ibm.com.
 
 ## Running the Demo
