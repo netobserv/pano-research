@@ -42,7 +42,7 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 Changes needed to the components consisted of the following:
 
 - Code Changes:
-    - [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent): Extensions to allow Full Packet Capture using eBPF, instead of flow-logs.
+    - [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent): Extensions to allow Full Packet Capture using eBPF, instead of flow-logs.  The changes are currently in a [pull request](https://github.com/netobserv/netobserv-ebpf-agent/pull/113).  They are scheduled for inclusion in Netobserv 1.6.
 - Package Additions:
     - An [Open-Soure Zeek Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides the [Zeek Network Security Monitoring Tool](https://zeek.org/) with [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) 
 - Configuration (but no code changes):
