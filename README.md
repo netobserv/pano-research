@@ -44,7 +44,7 @@ Changes needed to the components consisted of the following:
 - Code Changes:
     - [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent): Extensions to allow Full Packet Capture using eBPF, instead of flow-logs.
 - Package Additions:
-    - An [Open-Soure Zeek Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [Zeek Network Security Monitoring Tool](https://zeek.org/) with [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) 
+    - An [Open-Soure Zeek Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides the [Zeek Network Security Monitoring Tool](https://zeek.org/) with [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) 
 - Configuration (but no code changes):
     - [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) to handle DNS logs. Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
     - [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
