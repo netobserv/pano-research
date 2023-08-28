@@ -41,12 +41,15 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 
 Changes needed to the components consisted of the following:
 
-- Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs
-- An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
-- Configuration (but no code changes) to [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline). Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
-- Configuration (but no code changes) to [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
-- Apache [Kafka](https://kafka.apache.org/) -- No changes
-- CNCF's [Prometheus](https://prometheus.io/) -- No changes
+- Code Changes:
+    - Extentions to the [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) to allow Full Packet Capture using eBPF, instead of flow-logs
+    - An [Open-Soure Package](https://github.com/emnahum/zeek-pcapovertcp-plugin) that provides [PCAP-over-TCP functionality](https://www.netresec.com/?page=Blog&month=2022-08&post=What-is-PCAP-over-IP) to the [Zeek Network Security Monitoring Tool](https://zeek.org/)
+- Configuration Changes (but no code changes):
+    - [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) to handle DNS logs. Config file available [here](demo1/flowlogs-pipeline/pano-kafka-dns.yaml).
+    - [Grafana](https://grafana.com/) to add a DNS dashboard. Dashboard available [here](demo1/grafana/pano-dns-dashboard.json). 
+- CNCF's [Prometheus](https://prometheus.io/) -- Minimal configuration.  Config file available [here](demo1/prometheus/prometheus.yml).
+- No Changes at all:
+    - Apache [Kafka](https://kafka.apache.org/) -- No changes
 
 ## Use Case: DNS
 
