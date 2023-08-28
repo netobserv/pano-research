@@ -12,12 +12,6 @@
   "__elements": {},
   "__requires": [
     {
-      "type": "panel",
-      "id": "barchart",
-      "name": "Bar chart",
-      "version": ""
-    },
-    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -79,7 +73,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "mappings": [],
           "thresholds": {
@@ -95,7 +89,7 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "short"
         },
         "overrides": []
       },
@@ -107,7 +101,7 @@
       },
       "id": 9,
       "options": {
-        "colorMode": "value",
+        "colorMode": "background",
         "graphMode": "none",
         "justifyMode": "auto",
         "orientation": "auto",
@@ -118,7 +112,6 @@
           "fields": "",
           "values": false
         },
-        "text": {},
         "textMode": "auto"
       },
       "pluginVersion": "10.0.2",
@@ -153,22 +146,33 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "fillOpacity": 80,
-            "gradientMode": "none",
+            "barAlignment": 0,
+            "drawStyle": "bars",
+            "fillOpacity": 100,
+            "gradientMode": "opacity",
             "hideFrom": {
               "legend": false,
               "tooltip": false,
               "viz": false
             },
+            "lineInterpolation": "linear",
             "lineWidth": 1,
+            "pointSize": 5,
             "scaleDistribution": {
               "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
             },
             "thresholdsStyle": {
               "mode": "off"
             }
           },
           "mappings": [],
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -193,25 +197,16 @@
       },
       "id": 6,
       "options": {
-        "barRadius": 0,
-        "barWidth": 0.97,
-        "fullHighlight": false,
-        "groupWidth": 0.7,
         "legend": {
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
           "showLegend": false
         },
-        "orientation": "auto",
-        "showValue": "auto",
-        "stacking": "none",
         "tooltip": {
           "mode": "single",
           "sort": "none"
-        },
-        "xTickLabelRotation": 0,
-        "xTickLabelSpacing": 100
+        }
       },
       "targets": [
         {
@@ -227,111 +222,6 @@
         }
       ],
       "title": "Rate of DNS Queries",
-      "type": "barchart"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "Response Time of DNS response in ms",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "bars",
-            "fillOpacity": 48,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 12,
-            "scaleDistribution": {
-              "log": 10,
-              "type": "log"
-            },
-            "showPoints": "always",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "normal"
-            },
-            "thresholdsStyle": {
-              "mode": "dashed+area"
-            }
-          },
-          "displayName": "${__field.labels.id_resp_h}",
-          "mappings": [],
-          "max": 10,
-          "min": 1e-8,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 0.1
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 8
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "pano_dns_rtt_avg",
-          "instant": false,
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Average Response Time (seconds)",
-      "transformations": [
-        {
-          "id": "renameByRegex",
-          "options": {
-            "regex": "\"8\\.8\\.8\\.8\"",
-            "renamePattern": "\"Google DNS\""
-          }
-        }
-      ],
       "type": "timeseries"
     },
     {
@@ -396,7 +286,7 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 12,
+        "x": 0,
         "y": 8
       },
       "id": 10,
@@ -426,162 +316,6 @@
         }
       ],
       "title": "Average Response Time (seconds)",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
-      },
-      "description": "Histogram of Response Time (.99, .9, .75, etc)",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "series",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 95,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 5,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "log": 10,
-              "type": "log"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "displayName": "${__field.labels.histogram_quantile}",
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": ""
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "id": 5,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.99, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "instant": false,
-          "range": true,
-          "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.95, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "B"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.9, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "C"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.75, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "D"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "exemplar": false,
-          "expr": "histogram_quantile(0.5, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "E"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
-          },
-          "editorMode": "builder",
-          "expr": "histogram_quantile(0.25, sum by(le) (rate(pano_dns_rtt_histogram_bucket[$__rate_interval])))",
-          "hide": false,
-          "instant": false,
-          "range": true,
-          "refId": "F"
-        }
-      ],
-      "title": "DNS Response Time Histogram",
       "type": "timeseries"
     },
     {
@@ -647,7 +381,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 16
+        "y": 8
       },
       "id": 13,
       "options": {
@@ -655,7 +389,7 @@
           "calcs": [],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": true
+          "showLegend": false
         },
         "tooltip": {
           "mode": "single",
@@ -788,10 +522,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
+        "h": 9,
+        "w": 9,
         "x": 0,
-        "y": 24
+        "y": 16
       },
       "id": 11,
       "options": {
@@ -820,7 +554,7 @@
           "refId": "A"
         }
       ],
-      "title": "DNS Return Code Rate",
+      "title": "DNS Return Code",
       "type": "timeseries"
     },
     {
@@ -846,10 +580,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 24
+        "h": 9,
+        "w": 3,
+        "x": 9,
+        "y": 16
       },
       "id": 14,
       "options": {
@@ -888,7 +622,7 @@
           "refId": "A"
         }
       ],
-      "title": "DNS Return Code Percentage",
+      "title": "DNS Return Code Cumulative Percentage",
       "type": "piechart"
     },
     {
@@ -951,10 +685,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 32
+        "h": 9,
+        "w": 9,
+        "x": 12,
+        "y": 16
       },
       "id": 12,
       "options": {
@@ -1009,9 +743,9 @@
       },
       "gridPos": {
         "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 32
+        "w": 3,
+        "x": 21,
+        "y": 16
       },
       "id": 15,
       "options": {
@@ -1050,7 +784,7 @@
           "refId": "A"
         }
       ],
-      "title": "DNS Query Type Percentage",
+      "title": "DNS Query Type Cumulative Percentage",
       "type": "piechart"
     }
   ],
@@ -1069,6 +803,6 @@
   "timezone": "",
   "title": "PANO DNS Metrics",
   "uid": "cfae8ead-2e7a-4f88-9dc4-1f2014cb76ff",
-  "version": 14,
+  "version": 16,
   "weekStart": ""
 }
