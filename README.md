@@ -74,9 +74,10 @@ You will need the following to run the demo:
 
 - A Linux bare-metal machine or VM (we tested on `Ubuntu 22.04.3 LTS`).
 - A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
-- Git - to check out the source tree
-- Bash - to build the docker images from standard components
-- Docker and docker-compose that support "host" networking
+- Git - to check out the source tree (should be included in your Linux)
+- Bash - to build the docker images from standard components (should be included in your Linux)
+- Docker and docker-compose that support "host" networking (get them [here](https://docs.docker.com/engine/install/ubuntu/) and 
+[here](https://docs.docker.com/compose/install/linux/)
 
 ### Check-out the Demo
 
