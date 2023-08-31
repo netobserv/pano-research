@@ -132,6 +132,8 @@ The first time you do this, you will see the following:
 
 Grafana is asking you to log in.  The credentials are "admin" and "admin".  Please don't change them, **skip** the password change.
 
+You may be presented with a `Dashboard` page.  If so, click the `Home` button in the upper right.
+
 You should see a Welcome page:
 
 ![Grafana Welcome Page](images/grafana-welcome.png)
