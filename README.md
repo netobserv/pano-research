@@ -130,7 +130,7 @@ The first time you do this, you will see the following:
 
 ![Grafana Login Page](images/grafana-foobar.png)
 
-Grafana is asking you to log in.  The credentials are "admin" and "admin".  If you change them, you must remember them for next time.
+Grafana is asking you to log in.  The credentials are `admin` and `admin`.  If you change them, you must remember them for next time.
 Our advice is to **not** change them and **skip** the password change.  
 
 You may be presented with a `Dashboard` page.  If so, click the `Home` button in the upper left.
