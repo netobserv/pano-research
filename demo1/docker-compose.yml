@@ -75,7 +75,7 @@ services:
     restart: unless-stopped
     environment:
       - GF_SECURITY_ADMIN_USER=admin #TODO
-      - GF_SECURITY_ADMIN_PASSWORD=password #TODO
+      - GF_SECURITY_ADMIN_PASSWORD=admin #TODO
     network_mode: "host"
 
   dnsperf1:
