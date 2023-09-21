@@ -31,7 +31,7 @@ More detail can be found in a PPT deck [here](Pano-Web-Site.pptx).
 ## Pipeline Components
 
 - RedHat's [NetObserv eBPF Agent](https://github.com/netobserv/netobserv-ebpf-agent) -- to capture relevant packets
-- The [Zeek Network Security Monitoring Tool](https://zeek.org/) -- to process relevant packets and emit resulting logs
+- The [Zeek Network Security Monitoring Tool](https://zeek.org/) -- to analyze the relevant packets and emit the resulting logs
 - Apache [Kafka](https://kafka.apache.org/) -- to communicate between components
 - RedHat's [Flowlogs Pipeline](https://github.com/netobserv/flowlogs-pipeline) -- to convert logs to metrics
 - CNCF's [Prometheus](https://prometheus.io/) -- to scrape metrics and centrally store them
