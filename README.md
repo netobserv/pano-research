@@ -76,7 +76,7 @@ You will need the following to run the demo:
 - A relatively new Linux Kernel that supports CAP_BPF in Docker (tested on `5.15.0-78-generic`).
 - Git - to check out the source tree (should be included in your Linux).
 - Bash - to build the docker images from standard components (should be included in your Linux).
-- Docker and docker-compose that support "host" networking (for Ubuntu get them [here](https://docs.docker.com/engine/install/ubuntu/) and 
+- Docker and docker-compose (or "docker compose") that support "host" networking (for Ubuntu get them [here](https://docs.docker.com/engine/install/ubuntu/) and 
 [here](https://docs.docker.com/compose/install/linux/)).
 
 ### Check-out the Demo
@@ -101,7 +101,7 @@ You should see various component images downloading and some building.
 
 ### Running the Demo
 
-Run `docker compose up -d` in the demo1 subdirectory:
+Run `docker compose up -d` (or `docker-compose up -d') in the demo1 subdirectory:
 
 ```
 docker compose up -d
