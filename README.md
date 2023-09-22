@@ -101,7 +101,7 @@ You should see various component images downloading and some building.
 
 ### Running the Demo
 
-Run `docker compose up -d` (or `docker-compose up -d') in the demo1 subdirectory:
+Run `docker compose up -d` (or `docker-compose up -d`) in the demo1 subdirectory:
 
 ```
 docker compose up -d
