@@ -13,7 +13,6 @@ services:
       - LOG_LEVEL=debug
       - AGENT_IP=127.0.0.1
     cap_add:
-        - CAP_BPF
         - CAP_PERFMON
         - CAP_NET_ADMIN
         - CAP_SYS_RESOURCE
